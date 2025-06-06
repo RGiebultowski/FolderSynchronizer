@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace FolderSynchronizer
 {
-    internal class FileComparer
+    internal class FileComparer : IFileComparer
     {
+        public bool AreEqual(string file1, string file2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

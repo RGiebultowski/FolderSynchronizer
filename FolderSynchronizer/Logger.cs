@@ -8,5 +8,17 @@ namespace FolderSynchronizer
 {
     internal class Logger
     {
+        private readonly string _loggerFile;
+
+        public Logger(string _loggerFile) 
+        {
+            this._loggerFile = _loggerFile;
+        }
+
+        public void Log(string message)
+        {
+            string logTime = $"[{DateTime.Now}]: {message}";
+            File.AppendAllText(_loggerFile, message);
+        }
     }
 }
