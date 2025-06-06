@@ -2,6 +2,9 @@
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        if (args.Length != 4)
+        {
+            Console.WriteLine("Usage: FolderSynchronizer.exe <sourcePath> <replicaPath> <interval> <logFile>");
+        }
     }
 }
