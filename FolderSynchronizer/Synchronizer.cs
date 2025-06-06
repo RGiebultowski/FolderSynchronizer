@@ -31,7 +31,7 @@ namespace FolderSynchronizer
                 $"Source Folder Exists: {path}" :
                 $"Created folder: {Directory.CreateDirectory(path).FullName}";
 
-            logger.Log(message);
+            logger.Log($"[Logger Task] {message}");
         }
     }
 }

@@ -18,5 +18,20 @@ internal class Program
         Logger logger = new Logger(logFile);
         Synchronizer synchronizer = new Synchronizer(sourcePath, replicaPath, logger);
 
+        logger.Log($"[Logger Task] Syncing folders with interval: {intervalSecs}sec");
+        while (true) 
+        {
+            try
+            {
+                synchronizer.Synchronize();
+            }
+            catch (Exception ex) 
+            {
+                logger.Log($"[Logger Error] Could not sync folders: {ex.Message}");
+            }
+
+            Thread.Sleep(intervalSecs * 1000);
+        }
+
     }
 }
