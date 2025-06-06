@@ -1,4 +1,6 @@
-﻿internal class Program
+﻿using FolderSynchronizer;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
@@ -12,5 +14,8 @@
         string replicaPath = args[1];
         int intervalSecs = int.Parse(args[2]);
         string logFile = args[3];
+
+        Logger logger = new Logger(logFile);
+        FolderSynchrinizer synchronizer
     }
 }
