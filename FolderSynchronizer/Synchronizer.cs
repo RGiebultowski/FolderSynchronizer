@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FolderSynchronizer
 {
-    internal class FolderSynchronizer
+    internal class Synchronizer
     {
         private readonly string sourcePath;
         private readonly string replicaPath;
         private readonly Logger logger;
 
-        public FolderSynchronizer(string sourcePath, string replicaPath, Logger logger)
+        public Synchronizer(string sourcePath, string replicaPath, Logger logger)
         {
             this.sourcePath = sourcePath;
             this.replicaPath = replicaPath;

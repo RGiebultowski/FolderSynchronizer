@@ -16,6 +16,7 @@ internal class Program
         string logFile = args[3];
 
         Logger logger = new Logger(logFile);
-        FolderSynchrinizer synchronizer
+        Synchronizer synchronizer = new Synchronizer(sourcePath, replicaPath, logger);
+
     }
 }
