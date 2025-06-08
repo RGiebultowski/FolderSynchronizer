@@ -75,15 +75,5 @@ namespace FolderSynchronizer
                 }
             }
         }
-
-        private void ChangeFileAttributes(DirectoryInfo file, string filePath)
-        {
-            foreach (var info in file.GetFileSystemInfos("*", SearchOption.AllDirectories))
-            {
-                info.Attributes = FileAttributes.Normal;
-            }
-
-            File.SetAttributes(filePath.ToString(), FileAttributes.Normal);
-        }
     }
 }
