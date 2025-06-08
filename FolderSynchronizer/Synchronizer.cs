@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,7 @@ namespace FolderSynchronizer
             CreateDirectory(replicaPath);
             UpdateFiles();
             DeleteFiles();
+            logger.Log("[Info] Folders are same!");
         }
 
         private void CreateDirectory(string path)

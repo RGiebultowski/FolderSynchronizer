@@ -24,6 +24,11 @@ namespace FolderSynchronizer
 
                 return md5.ComputeHash(sourceStream).SequenceEqual(md5.ComputeHash(replicaStream));
             }
+            catch (FileNotFoundException)
+            {
+                logger.Log("[Warning] Source folder is not same as Backup");
+                return false;
+            }
             catch (Exception ex)
             {
                 logger.Log($"[Error comparing files] {ex.Message}");
