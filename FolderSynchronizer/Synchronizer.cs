@@ -35,10 +35,10 @@ namespace FolderSynchronizer
             var folderName = new DirectoryInfo(path).Name;
 
             var message = Directory.Exists(path) ?
-                $"Folder {folderName} Exists: {path}" :
+                $"Folder {folderName} exists: {path}" :
                 $"Created folder: {Directory.CreateDirectory(path).FullName}";
 
-            logger.Log($"[Logger Task] {message}");
+            logger.Log($"[Task] {message}");
         }
 
         private void UpdateFiles()
@@ -51,12 +51,15 @@ namespace FolderSynchronizer
                 var targetDir = Path.GetDirectoryName(replicaFile);
                 
                 if (!string.IsNullOrEmpty(targetDir) && !Directory.Exists(targetDir))
+                {
                     Directory.CreateDirectory(targetDir);
+                    logger.Log($"[Task] Created directory: {targetDir} in {replicaPath}");
+                }
 
                 if (!fileComparer.AreEqual(sourceFile, replicaFile))
                 {
                     File.Copy(sourceFile, replicaFile, true);
-                    logger.Log($"[Logger task] Copied/updated: {relativePath} into {replicaPath}");
+                    logger.Log($"[Task] Copied/updated: {relativePath} into {replicaPath}");
                 }
             }
         }
@@ -71,7 +74,22 @@ namespace FolderSynchronizer
                 if (!File.Exists(sourceFile))
                 {
                     File.Delete(replicaFile);
-                    logger.Log($"[Logger task] Deleted: {relativePath}");
+                    logger.Log($"[Task] Deleted: {relativePath}");
+                }
+            }
+
+            var replicaDirs = Directory.GetDirectories(replicaPath, "*", SearchOption.AllDirectories)
+                               .OrderByDescending(d => d.Length);
+
+            foreach (var dir in replicaDirs)
+            {
+                var relativePath = Path.GetRelativePath(replicaPath, dir);
+                var sourceDir = Path.Combine(sourcePath, relativePath);
+
+                if (!Directory.Exists(sourceDir) && Directory.Exists(dir) && !Directory.EnumerateFileSystemEntries(dir).Any())
+                {
+                    Directory.Delete(dir);
+                    logger.Log($"[Task] Deleted directory: {relativePath}");
                 }
             }
         }

@@ -19,7 +19,7 @@ namespace FolderSynchronizer
                 Directory.CreateDirectory(logDirectory);
 
             string time = DateTime.Now.ToString("yyyy-MM-dd");
-            this.loggerFilePath = Path.Combine(logDirectory, $"log_{time}.log");
+            this.loggerFilePath = Path.Combine(logDirectory, $"{loggerFilePath}_{time}.log");
         }
 
         public void Log(string message)
@@ -32,7 +32,7 @@ namespace FolderSynchronizer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[Logger Error] Could not write to log file: {ex.Message}");
+                Console.WriteLine($"[Error] Could not write to log file: {ex.Message}");
             }
         }
     }

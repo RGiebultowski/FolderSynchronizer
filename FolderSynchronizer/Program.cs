@@ -6,7 +6,7 @@ internal class Program
     {
         if (args.Length != 4)
         {
-            Console.WriteLine("Usage: FolderSynchronizer.exe <sourcePath> <replicaPath> <intervalForSync> <logFile>");
+            Console.WriteLine("Usage: FolderSynchronizer.exe <sourcePath> <replicaPath> <intervalForSync> <logFileName>");
             return;
         }
 
@@ -19,16 +19,17 @@ internal class Program
         IFileComparer fileComparer = new FileComparer(logger);
         Synchronizer synchronizer = new Synchronizer(sourcePath, replicaPath, logger, fileComparer);
 
-        logger.Log($"[Logger Task] Syncing folders with interval: {intervalSecs}sec");
+        logger.Log($"[Task] Syncing folders with interval: {intervalSecs}sec");
         while (true) 
         {
             try
             {
+                logger.Log("[Task] Syncing...");
                 synchronizer.Synchronize();
             }
             catch (Exception ex) 
             {
-                logger.Log($"[Logger Error] Could not sync folders: {ex.Message}");
+                logger.Log($"[Error] Could not sync folders: {ex.Message}");
             }
 
             Thread.Sleep(intervalSecs * 1000);
