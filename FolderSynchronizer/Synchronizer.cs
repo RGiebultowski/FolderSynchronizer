@@ -60,7 +60,7 @@ namespace FolderSynchronizer
                 }
             }
         }
-
+        //TODO: Delete Folders
         private void DeleteFiles()
         {
             foreach (var replicaFile in Directory.GetFiles(replicaPath, "*", SearchOption.AllDirectories))
