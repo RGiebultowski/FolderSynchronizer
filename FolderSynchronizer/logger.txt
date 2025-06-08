@@ -1,5 +1,0 @@
-[Task] Syncing folders with interval: 30sec
-[Task] Folder Source exists: C:\Source
-[Task] Folder Backup exists: C:\Backup
-[Task] Folder Source exists: C:\Source
-[Task] Folder Backup exists: C:\Backup
