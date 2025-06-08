@@ -18,11 +18,15 @@ namespace FolderSynchronizer
         {
             try
             {
-                using var md5 = MD5.Create();
+                using var sha256_Source = SHA256.Create();
+                using var sha256_Replica = SHA256.Create();
                 using var sourceStream = File.OpenRead(sourceFile);
                 using var replicaStream = File.OpenRead(replicaFile);
 
-                return md5.ComputeHash(sourceStream).SequenceEqual(md5.ComputeHash(replicaStream));
+                var sourceHash = sha256_Source.ComputeHash(sourceStream);
+                var replicaHash = sha256_Replica.ComputeHash(replicaStream);
+
+                return sourceHash.SequenceEqual(replicaHash);
             }
             catch (FileNotFoundException)
             {
