@@ -63,7 +63,7 @@ namespace FolderSynchronizer
                 }
             }
         }
-        //TODO: Delete Folders
+
         private void DeleteFiles()
         {
             foreach (var replicaFile in Directory.GetFiles(replicaPath, "*", SearchOption.AllDirectories))
@@ -78,8 +78,7 @@ namespace FolderSynchronizer
                 }
             }
 
-            var replicaDirs = Directory.GetDirectories(replicaPath, "*", SearchOption.AllDirectories)
-                               .OrderByDescending(d => d.Length);
+            var replicaDirs = Directory.GetDirectories(replicaPath, "*", SearchOption.AllDirectories).OrderByDescending(d => d.Length);
 
             foreach (var dir in replicaDirs)
             {
