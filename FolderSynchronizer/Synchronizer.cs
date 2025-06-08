@@ -57,10 +57,10 @@ namespace FolderSynchronizer
 
         private void DeleteFiles()
         {
-            foreach (var sourceFile in Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories))
+            foreach (var replicaFile in Directory.GetFiles(replicaPath, "*", SearchOption.AllDirectories))
             {
-                var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
-                var replicaFile = Path.Combine(replicaPath, relativePath);
+                var relativePath = Path.GetRelativePath(replicaPath, replicaFile);
+                var sourceFile = Path.Combine(sourcePath, relativePath);
 
                 if (!File.Exists(sourceFile))
                 {
