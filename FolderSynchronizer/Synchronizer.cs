@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,10 +48,15 @@ namespace FolderSynchronizer
                 var relativePath = Path.GetRelativePath(sourcePath, sourceFile);
                 var replicaFile = Path.Combine(replicaPath, relativePath);
 
+                var targetDir = Path.GetDirectoryName(replicaFile);
+                
+                if (!string.IsNullOrEmpty(targetDir) && !Directory.Exists(targetDir))
+                    Directory.CreateDirectory(targetDir);
+
                 if (!fileComparer.AreEqual(sourceFile, replicaFile))
                 {
                     File.Copy(sourceFile, replicaFile, true);
-                    logger.Log($"[Logger task] Copied/updated: {relativePath}");
+                    logger.Log($"[Logger task] Copied/updated: {relativePath} into {replicaPath}");
                 }
             }
         }
@@ -68,6 +74,16 @@ namespace FolderSynchronizer
                     logger.Log($"[Logger task] Deleted: {relativePath}");
                 }
             }
+        }
+
+        private void ChangeFileAttributes(DirectoryInfo file, string filePath)
+        {
+            foreach (var info in file.GetFileSystemInfos("*", SearchOption.AllDirectories))
+            {
+                info.Attributes = FileAttributes.Normal;
+            }
+
+            File.SetAttributes(filePath.ToString(), FileAttributes.Normal);
         }
     }
 }
