@@ -8,18 +8,18 @@ namespace FolderSynchronizer
 {
     internal class Logger
     {
-        private readonly string _loggerFilePath;
-        private readonly string _logDirectory= @"C:\Logs";
+        private readonly string loggerFilePath;
+        private readonly string logDirectory= @"C:\Logs";
 
-        public Logger(string loggerFile) 
+        public Logger(string loggerFilePath) 
         {
-            loggerFile = _loggerFilePath;
+            this.loggerFilePath = loggerFilePath;
             
-            if(!Directory.Exists(_logDirectory))
-                Directory.CreateDirectory(_logDirectory);
+            if(!Directory.Exists(logDirectory))
+                Directory.CreateDirectory(logDirectory);
 
             string time = DateTime.Now.ToString("yyyy-MM-dd");
-            _loggerFilePath = Path.Combine(_logDirectory, $"log_{time}.log");
+            this.loggerFilePath = Path.Combine(logDirectory, $"log_{time}.log");
         }
 
         public void Log(string message)
@@ -28,7 +28,7 @@ namespace FolderSynchronizer
             Console.WriteLine(consoleLog);
             try
             {
-                File.AppendAllText(_loggerFilePath, message);
+                File.AppendAllText(loggerFilePath, message + Environment.NewLine);
             }
             catch (Exception ex)
             {

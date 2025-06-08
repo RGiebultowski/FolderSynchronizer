@@ -8,6 +8,6 @@ namespace FolderSynchronizer
 {
     internal interface IFileComparer
     {
-        bool AreEqual(string file1, string file2);
+        bool AreEqual(string sourceFile, string replicaFile);
     }
 }

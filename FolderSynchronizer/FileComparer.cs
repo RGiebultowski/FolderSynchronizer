@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,9 +9,26 @@ namespace FolderSynchronizer
 {
     internal class FileComparer : IFileComparer
     {
-        public bool AreEqual(string file1, string file2)
+        private readonly Logger logger;
+        public FileComparer(Logger logger) 
         {
-            throw new NotImplementedException();
+            this.logger = logger;
+        }
+        public bool AreEqual(string sourceFile, string replicaFile)
+        {
+            try
+            {
+                using var md5 = MD5.Create();
+                using var sourceStream = File.OpenRead(sourceFile);
+                using var replicaStream = File.OpenRead(replicaFile);
+
+                return md5.ComputeHash(sourceStream).SequenceEqual(md5.ComputeHash(replicaStream));
+            }
+            catch (Exception ex)
+            {
+                logger.Log($"[Error comparing files] {ex.Message}");
+                return false;
+            }
         }
     }
 }

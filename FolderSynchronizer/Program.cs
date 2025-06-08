@@ -16,7 +16,8 @@ internal class Program
         string logFile = args[3];
 
         Logger logger = new Logger(logFile);
-        Synchronizer synchronizer = new Synchronizer(sourcePath, replicaPath, logger);
+        IFileComparer fileComparer = new FileComparer(logger);
+        Synchronizer synchronizer = new Synchronizer(sourcePath, replicaPath, logger, fileComparer);
 
         logger.Log($"[Logger Task] Syncing folders with interval: {intervalSecs}sec");
         while (true) 
