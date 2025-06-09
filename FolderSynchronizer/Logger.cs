@@ -9,17 +9,20 @@ namespace FolderSynchronizer
     internal class Logger
     {
         private readonly string loggerFilePath;
-        private readonly string logDirectory= @"C:\Logs";
 
         public Logger(string loggerFilePath) 
         {
-            this.loggerFilePath = loggerFilePath;
-            
-            if(!Directory.Exists(logDirectory))
+            string? logDirectory = Path.GetDirectoryName(loggerFilePath);
+            string logFileName = Path.GetFileNameWithoutExtension(loggerFilePath);
+
+            if (string.IsNullOrWhiteSpace(logDirectory))
+                throw new ArgumentException("Wrong log file path.");
+
+            if (!Directory.Exists(logDirectory))
                 Directory.CreateDirectory(logDirectory);
 
             string time = DateTime.Now.ToString("yyyy-MM-dd");
-            this.loggerFilePath = Path.Combine(logDirectory, $"{loggerFilePath}_{time}.log");
+            this.loggerFilePath = Path.Combine(logDirectory, $"{logFileName}_{time}.log");
         }
 
         public void Log(string message)

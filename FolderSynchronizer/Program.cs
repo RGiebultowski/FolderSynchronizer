@@ -6,7 +6,7 @@ internal class Program
     {
         if (args.Length != 4)
         {
-            Console.WriteLine("Usage: FolderSynchronizer.exe <sourcePath> <replicaPath> <intervalForSync> <logFileName>");
+            Console.WriteLine("Usage: FolderSynchronizer.exe <sourcePath> <replicaPath> <intervalForSync> <logPath>");
             return;
         }
 
